@@ -13,6 +13,7 @@ def login(request):
     email = request.GET['email']
     password = request.GET['password']
     if user.objects.filter(userEmail=email,userPassword=password).count() == 1:
+        request.session['email'] = email
         return HttpResponse("login done")
     else:
         return HttpResponse("login failed")
