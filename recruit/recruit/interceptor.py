@@ -1,4 +1,4 @@
-from  django.utils.deprecation import MiddlewareMixin
+from django.utils.deprecation import MiddlewareMixin
 from django.shortcuts import redirect
 
 class filter(MiddlewareMixin):

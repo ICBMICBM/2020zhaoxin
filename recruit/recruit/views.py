@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import user
+import json
 
 
 def index(request):
@@ -10,13 +11,13 @@ def renderLoginRegister(request):
     return render(request, 'login.html')
 
 def login(request):
-    email = request.GET['email']
-    password = request.GET['password']
+    email = request.POST['email']
+    password = request.POST['password']
     if user.objects.filter(userEmail=email,userPassword=password).count() == 1:
         request.session['email'] = email
-        return HttpResponse("login done")
+        return HttpResponse(json.dumps({"status":"success"}))
     else:
-        return HttpResponse("login failed")
+        return HttpResponse(json.dumps({"status":"failed"}))
 
 def register(request):
     username = request.GET['username']
