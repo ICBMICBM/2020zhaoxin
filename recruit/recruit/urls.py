@@ -15,14 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from chall_0 import urls as urls_0
+from chall import urls as chall_urls
 from . import views as views
+from captcha import urls as captcha_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index),
-    path('user/', views.renderLoginRegister),
+    path('login/', views.loginPage),
+    path('register/', views.registerPage),
     path('api/user/login',views.login),
     path('api/user/register',views.register),
-    path('chall0/',include(urls_0))
+    path('api/user/logout',views.logout),
+    path('chall/',include(chall_urls)),
+    path('captcha/',include(captcha_urls))
 ]

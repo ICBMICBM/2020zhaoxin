@@ -5,7 +5,6 @@ class user(models.Model):
     def id(self):
         return self.id()
 
-    userName = models.CharField(max_length=16,null=False)  # 用户名
     userPassword = models.CharField(max_length=512,null=False)  # 用户密码密文
     userEmail = models.EmailField(null=False)  # 用户邮箱
     userQQ = models.IntegerField(null=True)  # 用户qq

@@ -1,14 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from .models import user
 import json
 
 
 def index(request):
+    return render(request, 'index.html')
+
+def loginPage(request):
     return render(request, 'login.html')
 
-def renderLoginRegister(request):
-    return render(request, 'login.html')
+def registerPage(request):
+    return render(request, 'register.html')
 
 def login(request):
     email = request.POST['email']
@@ -20,15 +23,22 @@ def login(request):
         return HttpResponse(json.dumps({"status":"failed"}))
 
 def register(request):
-    username = request.GET['username']
-    password = request.GET['password']
-    email = request.GET['email']
-    qq = request.GET['qq']
+    # 暂时使用明文储存密码
+    password = request.POST['password']
+    email = request.POST['email']
+    qq = request.POST['qq']
     try:
-        if user.objects.filter(userName=username).count() == 0:
-            user.objects.create(userName=username,userPassword=password,
+        if user.objects.filter(userEmail=email).count() == 0:
+            user.objects.create(userPassword=password,
                                 userEmail=email,userQQ=qq)
-            return HttpResponse("register done")
+            request.session['email'] = email
+            return HttpResponse(json.dumps({"status":"success"}))
+        else:
+            return HttpResponse(json.dumps({"status":"failed"}))
     except Exception as e:
-        return HttpResponse(e)
+        print(e)
+        return HttpResponse(json.dumps({"status":"failed","info":e}))
 
+def logout(request):
+    request.session['email'] = None
+    return HttpResponseRedirect("/index")
