@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import user
+from chall.models import flag
 import json
 
 
@@ -42,3 +43,14 @@ def register(request):
 def logout(request):
     request.session['email'] = None
     return HttpResponseRedirect("/index")
+
+def me(request):
+    if request.session['email']:
+        email = request.session['email']
+        u = user.objects.get(userEmail=email)
+        solved = json.loads(u.solved).keys()
+        flags = flag.objects.all().count()
+        progress = len(solved) / flags if len(solved) > 0 else 0
+        return render(request,"me.html",{"progress":progress*100})
+    else:
+        return HttpResponseRedirect("/index")

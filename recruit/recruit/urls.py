@@ -20,7 +20,7 @@ from . import views as views
 from captcha import urls as captcha_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('nimda/', admin.site.urls),
     path('index/', views.index),
     path('login/', views.loginPage),
     path('register/', views.registerPage),
@@ -28,5 +28,6 @@ urlpatterns = [
     path('api/user/register',views.register),
     path('api/user/logout',views.logout),
     path('chall/',include(chall_urls)),
+    path('user/',views.me),
     path('captcha/',include(captcha_urls))
 ]

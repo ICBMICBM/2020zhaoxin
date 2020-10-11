@@ -10,5 +10,6 @@ class user(models.Model):
     userQQ = models.IntegerField(null=True)  # 用户qq
     userFlagSum = models.IntegerField(default=0,null=False)  # 用户flag数量
     userLatestFlag = models.CharField(max_length=32,null=False,default="NSS{W3LCOM3_TO_SWPU}")  # 用户最新flag
+    solved = models.CharField(max_length=512,null=True,default='{}')  # 用户已完成的题目
 
 # Create your models here.
