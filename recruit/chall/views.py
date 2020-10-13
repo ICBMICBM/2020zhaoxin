@@ -7,9 +7,6 @@ from random import shuffle
 from json import dumps,loads
 
 
-def index(request):
-    return HttpResponse("index")
-
 def submit(request):
     if request.method == 'POST':
         form = flagForm(request.POST)
@@ -51,14 +48,14 @@ def submit(request):
         return render(request,"submit.html",{'form':form})
 
 def chall(request,slug):
-    print(slug)
+    # print(slug)
     banned = ['.','/']
     for i in banned:
         if i in slug:
             print('illeagle')
             return HttpResponseRedirect('/index')
     try:
-        return render(request,str(slug+'.html'))
+        return render(request,str('chall/' + slug + '.html'))
     except Exception as e:
         print('exception ' + str(e))
         print('not found')
