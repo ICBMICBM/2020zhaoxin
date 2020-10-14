@@ -31,16 +31,16 @@
                     <a class="nav-link dropdown-toggle" href="/login" id="navbarDropdownMenuLink"
                        data-toggle="dropdown">
                         {% if request.session.email %}
-                        {{ request.session.email }}
+                            {{ request.session.email }}
                         {% else %}
-                        Login
+                            Login
                         {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         {% if request.session.email %}
-                        <a class="dropdown-item" href="/api/user/logout">Logout</a>
+                            <a class="dropdown-item" href="/api/user/logout">Logout</a>
                         {% else %}
-                        <a class="dropdown-item" href="/login">Login</a>
+                            <a class="dropdown-item" href="/login">Login</a>
                         {% endif %}
                     </div>
                 </li>
@@ -60,6 +60,10 @@
                     <div id="myAlert3" class="alert alert-warning" style="display: none">
                         <a href="#" class="close" data-dismiss="alert">&times;</a>
                         两次密码不匹配
+                    </div>
+                    <div id="myAlert4" class="alert alert-warning" style="display: none">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        您输入的内容不正确
                     </div>
                     <form>
                         <div class="form-group">
@@ -115,7 +119,7 @@
         var email = document.getElementById('exampleInputEmail').value;
         var password = document.getElementById('exampleInputPassword1').value;
         var repassword = document.getElementById('exampleInputPassword2').value;
-        if(password!==repassword){
+        if (password !== repassword) {
             document.getElementById('myAlert').style.display = 'none';
             document.getElementById('myAlert2').style.display = 'none';
             document.getElementById('myAlert3').style.display = '';
@@ -124,21 +128,32 @@
         $.ajax({
             type: 'POST',
             url: '/api/user/register',
-            data: {'qq':qq, 'email': email, 'password': password},
+            data: {'qq': qq, 'email': email, 'password': password},
             success: function (data) {
                 console.log(data);
                 if (JSON.parse(data).status == 'success') {
                     document.getElementById('myAlert3').style.display = 'none';
                     document.getElementById('myAlert2').style.display = 'none';
                     document.getElementById('myAlert').style.display = '';
-                    setTimeout(function (){$(location).attr('href','/index');},1500);
+                    document.getElementById('myAlert4').style.display = 'none';
+                    setTimeout(function () {
+                        $(location).attr('href', '/index');
+                    }, 1500);
                 } else if (JSON.parse(data).status == 'failed') {
                     document.getElementById('myAlert').style.display = 'none';
                     document.getElementById('myAlert2').style.display = '';
                     document.getElementById('myAlert3').style.display = 'none';
+                    document.getElementById('myAlert4').style.display = 'none';
                 } else {
                     alert(data);
                 }
+            },
+            error: function (data) {
+                console.log(data);
+                document.getElementById('myAlert4').style.display = '';
+                document.getElementById('myAlert3').style.display = 'none';
+                document.getElementById('myAlert2').style.display = 'none';
+                document.getElementById('myAlert').style.display = 'none';
             }
         });
     })

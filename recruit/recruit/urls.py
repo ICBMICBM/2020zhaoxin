@@ -18,6 +18,7 @@ from django.urls import path,include
 from chall import urls as chall_urls
 from . import views as views
 from captcha import urls as captcha_urls
+from spyder import views as spyder_view
 
 urlpatterns = [
     path('',views.index),
@@ -30,5 +31,6 @@ urlpatterns = [
     path('api/user/logout',views.logout),
     path('chall/',include(chall_urls)),
     path('user/',views.me),
-    path('captcha/',include(captcha_urls))
+    path('captcha/',include(captcha_urls)),
+
 ]

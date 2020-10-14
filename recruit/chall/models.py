@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class flag(models.Model):
 
     def id(self):
