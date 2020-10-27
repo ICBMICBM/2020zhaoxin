@@ -53,6 +53,16 @@
                          aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;">
                     </div>
                 </div>
+                <div class="info">
+                    {{ signed }} <br>
+                    {% if signed == "你已报名招新赛" %}
+                        姓名 {{ name }} <br>
+                        学号 {{ sid }} <br>
+                        QQ {{ qq }} <br>
+                        <br>
+                        <a class="btn btn-primary btn-large" href="/signup">update my info</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
