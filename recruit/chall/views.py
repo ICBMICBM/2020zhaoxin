@@ -3,7 +3,6 @@ from django.http import HttpResponse,HttpResponseRedirect
 from tools.submitFlagForm import flagForm
 from chall.models import flag as dbflag
 from recruit.models import user
-from random import shuffle
 from json import dumps,loads
 
 
@@ -37,10 +36,8 @@ def submit(request):
                 submitted = False
         else:
             submitted = False
-        yes = ['芜湖！','起飞！','GGWP！','ez']
-        no = ['再试一次吧','一定不是我的问题']
-        shuffle(yes)
-        shuffle(no)
+        yes = ['flag 正确']
+        no = ['flag 错误']
         res = yes[0] if submitted is True else no[0]
         return render(request,"result.html",{"result":res})
     else:
@@ -62,4 +59,3 @@ def chall(request,slug):
         return HttpResponseRedirect('/index')
 
 
-# Create your views here.
